@@ -1,0 +1,23 @@
+<app-navbar></app-navbar>
+<h1>Artists</h1>
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <div *ngFor="let artist of artists">
+      <ngb-panel title="{{ artist.name }}">
+        <ng-template ngbPanelContent>
+          <h6>Genres</h6>
+          <ul>
+            <li *ngFor="let genre of artist.genres">{{ genre }}</li>
+          </ul>
+          <h6>Images</h6>
+          <div class="row">
+            <div class="d-flex flex-wrap justify-content-center p-2">
+              <img *ngFor="let img of artist.images" alt="album image" width="200px" height="200px" src="{{ img }}" class="m-1">
+            </div>
+          </div>
+          <button class="btn btn-info mt-2" (click)="btnEditArtist(artist.identifier)">Edit</button>
+        </ng-template>>
+      </ngb-panel>
+    </div>
+  </ngb-accordion>
+
+  <button class="btn btn-success my-2" (click)="btnAddArtist()">Add</button>

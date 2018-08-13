@@ -1,0 +1,47 @@
+<div class="row">
+  <h1 class="display-4 mx-auto">Register</h1>
+</div>
+<div class="row">
+  <div class="col-6 mx-auto">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label for="staticEmail" class="col-2 col-form-label">Name</label>
+        <div class="col-10">
+          <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="staticEmail" class="col-2 col-form-label">Email</label>
+        <div class="col-10">
+          <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPassword" class="col-2 col-form-label">Password</label>
+        <div class="col-10">
+          <input type="password" name="password" class="form-control" placeholder="Password" formControlName="password">
+        </div>
+      </div>
+      <p *ngIf="error">
+        <ngb-alert [dismissible]="false" type="danger">
+          <strong>Error:</strong> {{ message }}
+        </ngb-alert>
+      </p>
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="submit" name="login" class="btn btn-primary" value="Register">
+        </div>
+      </div>
+    </form>
+
+    <div class="dropdown-divider"></div>
+
+    <div class="row">
+      <div class="col-12 text-center">
+        <span class="col-12 col-lg-8">Already have an account?</span>
+        <button class="btn btn-primary col-md-4" (click)="goToLogin()">Login</button>
+      </div>
+    </div>
+
+  </div>
+</div>

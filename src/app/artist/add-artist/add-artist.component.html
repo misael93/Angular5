@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+<div class="row">
+  <h1 class="display-4 mx-auto">Add artist</h1>
+</div>
+<div class="row">
+  <div class="col-6 mx-auto">
+    <form [formGroup]="addArtistForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="name" class="col-form-label">Name</label>
+        <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <div class="row">
+        <span class="col-12">Genres</span>
+        <div formArrayName="genres" class="col-12 col-md-6 mt-2" *ngFor="let genre of addArtistForm.controls['genres'].controls; let i = index">
+          <div formGroupName="{{i}}" class="input-group">
+            <input type="text" class="form-control" placeholder="Genre" formControlName="genre">
+            <div class="input-group-append">
+              <input type="button" class="btn btn-danger" (click)="removeGenreTemplate(i)" value="X">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="button" class="btn btn-info mt-2" (click)="addGenreTemplate()" value="Add genre">
+        </div>
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <div class="row">
+        <span class="col-12">Images (jpg, jpeg, png)</span>
+        <div formArrayName="images" class="col-12 mt-2" *ngFor="let image of addArtistForm.controls['images'].controls; let i = index">
+          <div formGroupName="{{i}}" class="input-group">
+            <input type="url" class="form-control" placeholder="URL" formControlName="image">
+            <div class="input-group-append">
+              <input type="button" class="btn btn-danger" (click)="removeImageURLTemplate(i)" value="X">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="button" class="btn btn-info mt-2" (click)="addImageURLTemplate()" value="Add url">
+        </div>
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <p *ngIf="error">
+        <ngb-alert [dismissible]="false" type="danger">
+          <strong>Error:</strong> {{ message }}
+        </ngb-alert>
+      </p>
+
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="submit" name="login" class="btn btn-primary" value="Add artist">
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<button class="btn btn-primary my-2" (click)="goBack()">Go back</button>

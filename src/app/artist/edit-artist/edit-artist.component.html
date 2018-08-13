@@ -1,0 +1,88 @@
+<app-navbar></app-navbar>
+<h1 *ngIf="!artistFound" class="text-danger">{{ message }}</h1>
+
+<div *ngIf="artistFound" class="row">
+  <div class="col-6 mx-auto">
+    <h1>Editing: {{ artist.name }}</h1>
+    <form [formGroup]="editArtistForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label for="name" class="col-form-label">Name</label>
+        <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name" value="{{ artist.name }}">
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <div class="row">
+        <span class="col-12">Genres</span>
+        <div formArrayName="genres" class="col-12 col-md-6 mt-2" *ngFor="let genre of editArtistForm.controls['genres'].controls; let i = index">
+          <div formGroupName="{{i}}" class="input-group">
+            <input type="url" class="form-control" placeholder="Genre" formControlName="genre">
+            <div class="input-group-append">
+              <input type="button" class="btn btn-danger" (click)="removeGenreTemplate(i)" value="X">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="button" class="btn btn-info mt-2" (click)="addGenreTemplate()" value="Add genre">
+        </div>
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <div class="row">
+        <span class="col-12">Images (jpg, jpeg, png)</span>
+        <!-- Input was losing focus whenever I typed a char -->
+        <!-- <div formArrayName="images" class="col-12 mt-2" *ngFor="let image of editArtistForm.get('images').value; let i = index"> -->
+        <div formArrayName="images" class="col-12 mt-2" *ngFor="let image of editArtistForm.controls['images'].controls; let i = index">
+          <div formGroupName="{{i}}" class="input-group">
+            <div class="row col-12 p-0">
+              <div class="d-flex flex-column col-12 p-0 justify-content-center">
+                <img class="mb-2 mx-auto" *ngIf="editArtistForm.get('images').value[i].alreadyStored" width="200px" height="200px" src="{{editArtistForm.get('images').value[i].image}}"
+                  alt="album image">
+                <div class="d-flex d-row">
+                  <input type="text" class="form-control" placeholder="URL" formControlName="image">
+                  <div class="input-group-append">
+                    <input type="button" class="btn btn-danger" (click)="removeImageURLTemplate(i)" value="X">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="button" class="btn btn-info mt-2" (click)="addImageURLTemplate()" value="Add url">
+        </div>
+      </div>
+
+      <div class="dropdown-divider"></div>
+
+      <p *ngIf="error">
+        <ngb-alert [dismissible]="false" type="danger">
+          <strong>Error:</strong> {{ message }}
+        </ngb-alert>
+      </p>
+
+      <p *ngIf="error === false">
+        <ngb-alert [dismissible]="false" type="success">
+          {{ message }}
+        </ngb-alert>
+      </p>
+
+      <div class="form-group row">
+        <div class="col-12 text-center">
+          <input type="submit" name="login" class="btn btn-success" value="Save">
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<button class="btn btn-primary my-2" (click)="goBack()">Go back</button>
